@@ -6,6 +6,7 @@
       *THIS PROGRAM CALCULATES THE TOTAL COST OF A RENTAL INCLUDING ALL
       *UTILITIES, DISCOUNTS, AND PREMIUM RENTALS. IT WILL FLAG ANY 
       *RENTAL OVER $1000 WITH THREE *** AT THE END OF THE DETAIL LINE.
+      *Changing this program by getting rid of the Over1000 variable.
       ******************************************************************
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
@@ -153,7 +154,6 @@
            05  O-UTILITIES             PIC $$,$$$.99.
            05  FILLER                  PIC XXXX    VALUE SPACES.
            05  O-RENT-DUE              PIC $$,$$$.99.
-           05  O-OVER1000              PIC XXX.
        01  GRAND-TOTAL-LINE.
            05  FILLER                  PIC X(13)
                    VALUE 'GRAND TOTALS:'.
@@ -220,7 +220,6 @@
        L3-CALCS.
            MOVE ZERO TO C-DISCOUNT.
            MOVE ZERO TO C-PREMIUM.
-           MOVE SPACES TO O-OVER1000.
            EVALUATE TRUE
                WHEN UNIT1-8
                    MOVE 650                TO C-BASE-RATE
@@ -276,9 +275,6 @@
            COMPUTE C-UTILITY = I-ELECTRIC+I-WATER+I-GAS+I-GARBAGE.
            COMPUTE C-TOTAL-RENT = C-SUBTOTAL + C-UTILITY.
            COMPUTE C-DISC-PREM = C-PREMIUM - C-DISCOUNT.
-           IF C-TOTAL-RENT > 1000
-               MOVE '***' TO O-OVER1000
-           END-IF.
            PERFORM L4-GRAND-TOTAL.
        L3-MOVE-PRINT.
            PERFORM L4-BUILDING.
